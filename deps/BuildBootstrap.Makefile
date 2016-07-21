@@ -111,10 +111,16 @@ CPP_STDOUT := $(CPP) -E
 endif
 
 
+ifeq ($(LLVM_USE_CMAKE),1)
+LLVM_LIB_NAME := LLVM
+else ifeq ($(LLVM_VER),svn)
+LLVM_LIB_NAME := LLVM
+else
 LLVM_LIB_NAME := LLVM-$(CXX_LLVM_VER)
+endif
 LDFLAGS += -l$(LLVM_LIB_NAME)
 
-LIB_DEPENDENCY = $(LIBDIR)/lib$(LLVM_LIB_NAME).$(SHLIB_EXT)
+LIB_DEPENDENCY += $(LIBDIR)/lib$(LLVM_LIB_NAME).$(SHLIB_EXT)
 
 usr/lib:
 	@mkdir -p $(CURDIR)/usr/lib/
